@@ -1,0 +1,1007 @@
+[
+  {
+    "model": "books.category",
+    "pk": 1,
+    "fields": { "name": "Computer Science", "description": "Programming, software development and CS books" }
+  },
+  {
+    "model": "books.category",
+    "pk": 2,
+    "fields": { "name": "Engineering", "description": "Aerospace, Civil, Chemical and Mechanical engineering" }
+  },
+  {
+    "model": "books.category",
+    "pk": 3,
+    "fields": { "name": "Electrical Engineering", "description": "Electrical and electronics engineering books" }
+  },
+  {
+    "model": "books.category",
+    "pk": 4,
+    "fields": { "name": "Classic Literature", "description": "Timeless classic novels and literature" }
+  },
+  {
+    "model": "books.category",
+    "pk": 5,
+    "fields": { "name": "Romance", "description": "Romantic fiction and love stories" }
+  },
+  {
+    "model": "books.category",
+    "pk": 6,
+    "fields": { "name": "Self Help & Trending", "description": "Self improvement and trending bestsellers" }
+  },
+  {
+    "model": "books.category",
+    "pk": 7,
+    "fields": { "name": "History & Biography", "description": "History, biography and social science" }
+  },
+  {
+    "model": "books.category",
+    "pk": 8,
+    "fields": { "name": "Cybersecurity", "description": "Hacking, security and networking books" }
+  },
+  {
+    "model": "books.category",
+    "pk": 9,
+    "fields": { "name": "Competitive Exams", "description": "UPSC, Bank PO, GK and exam preparation" }
+  },
+  {
+    "model": "books.category",
+    "pk": 10,
+    "fields": { "name": "Recent Bestsellers", "description": "Recently popular and award winning books" }
+  },
+
+  {
+    "model": "books.book",
+    "pk": 1,
+    "fields": {
+      "book_id": "LIB-0001",
+      "title": "Aerospace Engineering Fundamentals",
+      "author": "John D. Anderson",
+      "isbn": "978-0071234567",
+      "category": 2,
+      "publisher": null,
+      "total_copies": 4,
+      "available_copies": 4,
+      "rack_number": "ENG-A01",
+      "cover_image": "book_covers/aerospace.jpg",
+      "description": "A comprehensive guide to aerospace engineering principles and applications.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 2,
+    "fields": {
+      "book_id": "LIB-0002",
+      "title": "Problem Solving Methods in Artificial Intelligence",
+      "author": "Nils J. Nilsson",
+      "isbn": "978-0070465640",
+      "category": 1,
+      "publisher": null,
+      "total_copies": 5,
+      "available_copies": 5,
+      "rack_number": "CS-A01",
+      "cover_image": "book_covers/ai.jpg",
+      "description": "Explores AI problem-solving techniques including search, logic and planning.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 3,
+    "fields": {
+      "book_id": "LIB-0003",
+      "title": "Chemical Engineering Design",
+      "author": "Gavin Towler",
+      "isbn": "978-0080966595",
+      "category": 2,
+      "publisher": null,
+      "total_copies": 4,
+      "available_copies": 4,
+      "rack_number": "ENG-A02",
+      "cover_image": "book_covers/chemical.jpg",
+      "description": "Principles and practice of chemical engineering design.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 4,
+    "fields": {
+      "book_id": "LIB-0004",
+      "title": "Civil Engineering Building Structures",
+      "author": "Malcolm Millais",
+      "isbn": "978-0750658546",
+      "category": 2,
+      "publisher": null,
+      "total_copies": 5,
+      "available_copies": 5,
+      "rack_number": "ENG-A03",
+      "cover_image": "book_covers/civil.jpg",
+      "description": "Comprehensive guide to civil engineering and building structures.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 5,
+    "fields": {
+      "book_id": "LIB-0005",
+      "title": "Pride and Prejudice",
+      "author": "Jane Austen",
+      "isbn": "978-0141439518",
+      "category": 4,
+      "publisher": null,
+      "total_copies": 6,
+      "available_copies": 6,
+      "rack_number": "CL-A01",
+      "cover_image": "book_covers/classic01.jpg",
+      "description": "A romantic novel of manners set in early 19th-century England.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 6,
+    "fields": {
+      "book_id": "LIB-0006",
+      "title": "Nineteen Eighty-Four (1984)",
+      "author": "George Orwell",
+      "isbn": "978-0451524935",
+      "category": 4,
+      "publisher": null,
+      "total_copies": 6,
+      "available_copies": 6,
+      "rack_number": "CL-A02",
+      "cover_image": "book_covers/classic02.jpg",
+      "description": "A dystopian social science fiction novel about totalitarianism.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 7,
+    "fields": {
+      "book_id": "LIB-0007",
+      "title": "To Kill a Mockingbird",
+      "author": "Harper Lee",
+      "isbn": "978-0061935466",
+      "category": 4,
+      "publisher": null,
+      "total_copies": 5,
+      "available_copies": 5,
+      "rack_number": "CL-A03",
+      "cover_image": "book_covers/classic03.jpg",
+      "description": "A novel about racial injustice and moral growth in the American South.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 8,
+    "fields": {
+      "book_id": "LIB-0008",
+      "title": "The Great Gatsby",
+      "author": "F. Scott Fitzgerald",
+      "isbn": "978-0743273565",
+      "category": 4,
+      "publisher": null,
+      "total_copies": 5,
+      "available_copies": 5,
+      "rack_number": "CL-A04",
+      "cover_image": "book_covers/classic04.jpg",
+      "description": "A story of the mysteriously wealthy Jay Gatsby and his love for Daisy.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 9,
+    "fields": {
+      "book_id": "LIB-0009",
+      "title": "Clean Code: A Handbook of Agile Software Craftsmanship",
+      "author": "Robert C. Martin",
+      "isbn": "978-0132350884",
+      "category": 1,
+      "publisher": null,
+      "total_copies": 5,
+      "available_copies": 5,
+      "rack_number": "CS-A02",
+      "cover_image": "book_covers/clean code.jpg",
+      "description": "Best practices for writing clean, readable and maintainable code.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 10,
+    "fields": {
+      "book_id": "LIB-0010",
+      "title": "Code Complete",
+      "author": "Steve McConnell",
+      "isbn": "978-0735619678",
+      "category": 1,
+      "publisher": null,
+      "total_copies": 4,
+      "available_copies": 4,
+      "rack_number": "CS-A03",
+      "cover_image": "book_covers/code complete.jpg",
+      "description": "A practical handbook of software construction techniques.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 11,
+    "fields": {
+      "book_id": "LIB-0011",
+      "title": "Data Science from Scratch",
+      "author": "Joel Grus",
+      "isbn": "978-1492041139",
+      "category": 1,
+      "publisher": null,
+      "total_copies": 5,
+      "available_copies": 5,
+      "rack_number": "CS-A04",
+      "cover_image": "book_covers/Data Science.jpg",
+      "description": "First principles with Python — learn data science from the ground up.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 12,
+    "fields": {
+      "book_id": "LIB-0012",
+      "title": "Deep Learning",
+      "author": "Ian Goodfellow",
+      "isbn": "978-0262035613",
+      "category": 1,
+      "publisher": null,
+      "total_copies": 4,
+      "available_copies": 4,
+      "rack_number": "CS-A05",
+      "cover_image": "book_covers/Deep Learning.jpg",
+      "description": "The definitive textbook on deep learning by the pioneers of the field.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 13,
+    "fields": {
+      "book_id": "LIB-0013",
+      "title": "Design Patterns: Elements of Reusable Object-Oriented Software",
+      "author": "Gang of Four",
+      "isbn": "978-0201633610",
+      "category": 1,
+      "publisher": null,
+      "total_copies": 4,
+      "available_copies": 4,
+      "rack_number": "CS-A06",
+      "cover_image": "book_covers/design patterns.jpg",
+      "description": "Classic book on software design patterns every developer must read.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 14,
+    "fields": {
+      "book_id": "LIB-0014",
+      "title": "Django for Beginners",
+      "author": "William S. Vincent",
+      "isbn": "978-1735467221",
+      "category": 1,
+      "publisher": null,
+      "total_copies": 6,
+      "available_copies": 6,
+      "rack_number": "CS-A07",
+      "cover_image": "book_covers/Django for Beginner.jpg",
+      "description": "Build websites with Python and Django — perfect for beginners.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 15,
+    "fields": {
+      "book_id": "LIB-0015",
+      "title": "Electrical Engineering: Circuit Theory",
+      "author": "Vincent Del Toro",
+      "isbn": "978-0132496476",
+      "category": 3,
+      "publisher": null,
+      "total_copies": 5,
+      "available_copies": 5,
+      "rack_number": "EE-A01",
+      "cover_image": "book_covers/electrical.eng.jpg",
+      "description": "Fundamental principles of electrical engineering and circuit theory.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 16,
+    "fields": {
+      "book_id": "LIB-0016",
+      "title": "Electrical Engineering Fundamentals",
+      "author": "Vincent Del Toro",
+      "isbn": "978-0132496477",
+      "category": 3,
+      "publisher": null,
+      "total_copies": 5,
+      "available_copies": 5,
+      "rack_number": "EE-A02",
+      "cover_image": "book_covers/electrical01.eng.jpg",
+      "description": "Core fundamentals of electrical engineering for undergraduate students.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 17,
+    "fields": {
+      "book_id": "LIB-0017",
+      "title": "Eloquent JavaScript",
+      "author": "Marijn Haverbeke",
+      "isbn": "978-1593279509",
+      "category": 1,
+      "publisher": null,
+      "total_copies": 5,
+      "available_copies": 5,
+      "rack_number": "CS-A08",
+      "cover_image": "book_covers/Eloquent JavaScript.jpg",
+      "description": "A modern introduction to programming using JavaScript.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 18,
+    "fields": {
+      "book_id": "LIB-0018",
+      "title": "Engineering Statistics",
+      "author": "Douglas C. Montgomery",
+      "isbn": "978-1119585596",
+      "category": 2,
+      "publisher": null,
+      "total_copies": 4,
+      "available_copies": 4,
+      "rack_number": "ENG-A04",
+      "cover_image": "book_covers/eng.statistics.jpg",
+      "description": "Statistical methods for engineers and scientists.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 19,
+    "fields": {
+      "book_id": "LIB-0019",
+      "title": "Verbal and Non-Verbal Reasoning",
+      "author": "R.S. Aggarwal",
+      "isbn": "978-8121905510",
+      "category": 9,
+      "publisher": null,
+      "total_copies": 8,
+      "available_copies": 8,
+      "rack_number": "EX-A01",
+      "cover_image": "book_covers/exams01.jpg",
+      "description": "Complete guide for verbal and non-verbal reasoning for competitive exams.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 20,
+    "fields": {
+      "book_id": "LIB-0020",
+      "title": "Circular English Grammar",
+      "author": "Wren & Martin",
+      "isbn": "978-8121900980",
+      "category": 9,
+      "publisher": null,
+      "total_copies": 8,
+      "available_copies": 8,
+      "rack_number": "EX-A02",
+      "cover_image": "book_covers/exams02.jpg",
+      "description": "High School English Grammar and Composition for competitive exams.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 21,
+    "fields": {
+      "book_id": "LIB-0021",
+      "title": "General Knowledge 2023",
+      "author": "Manohar Pandey",
+      "isbn": "978-9387886025",
+      "category": 9,
+      "publisher": null,
+      "total_copies": 10,
+      "available_copies": 10,
+      "rack_number": "EX-A03",
+      "cover_image": "book_covers/exams03.jpg",
+      "description": "Complete general knowledge for all competitive examinations.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 22,
+    "fields": {
+      "book_id": "LIB-0022",
+      "title": "CSAT Manual 2011",
+      "author": "TMH Editorial",
+      "isbn": "978-0071077118",
+      "category": 9,
+      "publisher": null,
+      "total_copies": 5,
+      "available_copies": 5,
+      "rack_number": "EX-A04",
+      "cover_image": "book_covers/exams04.jpg",
+      "description": "Civil Services Aptitude Test manual for UPSC preparation.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 23,
+    "fields": {
+      "book_id": "LIB-0023",
+      "title": "Bank PO Solved Papers 2018-2020",
+      "author": "Arihant Experts",
+      "isbn": "978-9324193384",
+      "category": 9,
+      "publisher": null,
+      "total_copies": 8,
+      "available_copies": 8,
+      "rack_number": "EX-A05",
+      "cover_image": "book_covers/exams05.jpg",
+      "description": "Previous year solved papers for Bank PO examinations.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 24,
+    "fields": {
+      "book_id": "LIB-0024",
+      "title": "Around the World in 80 Days",
+      "author": "Jules Verne",
+      "isbn": "978-0140449052",
+      "category": 4,
+      "publisher": null,
+      "total_copies": 5,
+      "available_copies": 5,
+      "rack_number": "CL-A05",
+      "cover_image": "book_covers/exams06.jpg",
+      "description": "Classic adventure novel about Phileas Fogg's world trip in 80 days.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 25,
+    "fields": {
+      "book_id": "LIB-0025",
+      "title": "A Short History of Nearly Everything",
+      "author": "Bill Bryson",
+      "isbn": "978-0767908184",
+      "category": 7,
+      "publisher": null,
+      "total_copies": 4,
+      "available_copies": 4,
+      "rack_number": "HIS-A01",
+      "cover_image": "book_covers/hist.jpg",
+      "description": "A popular science book that explains the history of science and the universe.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 26,
+    "fields": {
+      "book_id": "LIB-0026",
+      "title": "HTML and CSS: Design and Build Websites",
+      "author": "Jon Duckett",
+      "isbn": "978-1118008188",
+      "category": 1,
+      "publisher": null,
+      "total_copies": 6,
+      "available_copies": 6,
+      "rack_number": "CS-A09",
+      "cover_image": "book_covers/html and css.jpg",
+      "description": "Beautifully designed introduction to HTML and CSS for beginners.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 27,
+    "fields": {
+      "book_id": "LIB-0027",
+      "title": "Java: The Complete Reference",
+      "author": "Herbert Schildt",
+      "isbn": "978-1260440232",
+      "category": 1,
+      "publisher": null,
+      "total_copies": 6,
+      "available_copies": 6,
+      "rack_number": "CS-A10",
+      "cover_image": "book_covers/java01.jpg",
+      "description": "The definitive guide to Java programming language.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 28,
+    "fields": {
+      "book_id": "LIB-0028",
+      "title": "Java Programming Pocket Reference",
+      "author": "Robert Liguori",
+      "isbn": "978-1449357566",
+      "category": 1,
+      "publisher": null,
+      "total_copies": 5,
+      "available_copies": 5,
+      "rack_number": "CS-A11",
+      "cover_image": "book_covers/java02.jpg",
+      "description": "Quick reference guide for Java programming.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 29,
+    "fields": {
+      "book_id": "LIB-0029",
+      "title": "Java: A Beginner's Guide",
+      "author": "Herbert Schildt",
+      "isbn": "978-1260463569",
+      "category": 1,
+      "publisher": null,
+      "total_copies": 5,
+      "available_copies": 5,
+      "rack_number": "CS-A12",
+      "cover_image": "book_covers/java03.jpg",
+      "description": "Step by step introduction to Java for beginners.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 30,
+    "fields": {
+      "book_id": "LIB-0030",
+      "title": "JavaScript: The Definitive Guide",
+      "author": "David Flanagan",
+      "isbn": "978-1491952023",
+      "category": 1,
+      "publisher": null,
+      "total_copies": 5,
+      "available_copies": 5,
+      "rack_number": "CS-A13",
+      "cover_image": "book_covers/javascript.jpg",
+      "description": "The complete guide to JavaScript programming.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 31,
+    "fields": {
+      "book_id": "LIB-0031",
+      "title": "Life: A User's Manual",
+      "author": "Georges Perec",
+      "isbn": "978-0002719940",
+      "category": 7,
+      "publisher": null,
+      "total_copies": 3,
+      "available_copies": 3,
+      "rack_number": "HIS-A02",
+      "cover_image": "book_covers/life.his.jpg",
+      "description": "A celebrated novel about the lives of tenants in a Parisian apartment.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 32,
+    "fields": {
+      "book_id": "LIB-0032",
+      "title": "Hands-On Machine Learning with Scikit-Learn, Keras & TensorFlow",
+      "author": "Aurélien Géron",
+      "isbn": "978-1492032649",
+      "category": 1,
+      "publisher": null,
+      "total_copies": 5,
+      "available_copies": 5,
+      "rack_number": "CS-A14",
+      "cover_image": "book_covers/Machine Learning01.jpg",
+      "description": "Practical guide to machine learning with Python.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 33,
+    "fields": {
+      "book_id": "LIB-0033",
+      "title": "Engineering Mechanics",
+      "author": "R.C. Hibbeler",
+      "isbn": "978-0133918922",
+      "category": 2,
+      "publisher": null,
+      "total_copies": 6,
+      "available_copies": 6,
+      "rack_number": "ENG-A05",
+      "cover_image": "book_covers/mech01.jpg",
+      "description": "Statics and dynamics in engineering mechanics.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 34,
+    "fields": {
+      "book_id": "LIB-0034",
+      "title": "Python for Data Analysis",
+      "author": "Wes McKinney",
+      "isbn": "978-1491957660",
+      "category": 1,
+      "publisher": null,
+      "total_copies": 5,
+      "available_copies": 5,
+      "rack_number": "CS-A15",
+      "cover_image": "book_covers/Python for Data Analysis.jpg",
+      "description": "Data wrangling with Pandas, NumPy and IPython.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 35,
+    "fields": {
+      "book_id": "LIB-0035",
+      "title": "Core Python Programming",
+      "author": "Wesley Chun",
+      "isbn": "978-0132269933",
+      "category": 1,
+      "publisher": null,
+      "total_copies": 6,
+      "available_copies": 6,
+      "rack_number": "CS-A16",
+      "cover_image": "book_covers/python01.jpg",
+      "description": "Comprehensive guide to Python programming language.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 36,
+    "fields": {
+      "book_id": "LIB-0036",
+      "title": "React: Up and Running",
+      "author": "Stoyan Stefanov",
+      "isbn": "978-1492051459",
+      "category": 1,
+      "publisher": null,
+      "total_copies": 4,
+      "available_copies": 4,
+      "rack_number": "CS-A17",
+      "cover_image": "book_covers/ReactUp and Running.jpg",
+      "description": "Building web applications with ReactJS.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 37,
+    "fields": {
+      "book_id": "LIB-0037",
+      "title": "The Alchemist",
+      "author": "Paulo Coelho",
+      "isbn": "978-0062315007",
+      "category": 10,
+      "publisher": null,
+      "total_copies": 8,
+      "available_copies": 8,
+      "rack_number": "REC-A01",
+      "cover_image": "book_covers/recent01.jpg",
+      "description": "A magical story about following your dreams and listening to your heart.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 38,
+    "fields": {
+      "book_id": "LIB-0038",
+      "title": "Sapiens: A Brief History of Humankind",
+      "author": "Yuval Noah Harari",
+      "isbn": "978-0062316097",
+      "category": 7,
+      "publisher": null,
+      "total_copies": 6,
+      "available_copies": 6,
+      "rack_number": "HIS-A03",
+      "cover_image": "book_covers/recent02.jpg",
+      "description": "How Homo sapiens became Earth's dominant species.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 39,
+    "fields": {
+      "book_id": "LIB-0039",
+      "title": "Democracy and Education",
+      "author": "John Dewey",
+      "isbn": "978-0684836317",
+      "category": 7,
+      "publisher": null,
+      "total_copies": 3,
+      "available_copies": 3,
+      "rack_number": "HIS-A04",
+      "cover_image": "book_covers/recent03.jpg",
+      "description": "An introduction to the philosophy of education.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 40,
+    "fields": {
+      "book_id": "LIB-0040",
+      "title": "Where the Crawdads Sing",
+      "author": "Delia Owens",
+      "isbn": "978-0735224292",
+      "category": 10,
+      "publisher": null,
+      "total_copies": 5,
+      "available_copies": 5,
+      "rack_number": "REC-A02",
+      "cover_image": "book_covers/recent04.jpg",
+      "description": "A mystery novel about a girl who raised herself in the marshes of North Carolina.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 41,
+    "fields": {
+      "book_id": "LIB-0041",
+      "title": "The Notebook",
+      "author": "Nicholas Sparks",
+      "isbn": "978-0446605236",
+      "category": 5,
+      "publisher": null,
+      "total_copies": 5,
+      "available_copies": 5,
+      "rack_number": "ROM-A01",
+      "cover_image": "book_covers/romance01.jpg",
+      "description": "A timeless love story about two young people who fall in love.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 42,
+    "fields": {
+      "book_id": "LIB-0042",
+      "title": "Me Before You",
+      "author": "Jojo Moyes",
+      "isbn": "978-0143124542",
+      "category": 5,
+      "publisher": null,
+      "total_copies": 5,
+      "available_copies": 5,
+      "rack_number": "ROM-A02",
+      "cover_image": "book_covers/romance02.jpg",
+      "description": "A story about love, loss and living life to the fullest.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 43,
+    "fields": {
+      "book_id": "LIB-0043",
+      "title": "P.S. I Love You",
+      "author": "Cecelia Ahern",
+      "isbn": "978-0786891559",
+      "category": 5,
+      "publisher": null,
+      "total_copies": 5,
+      "available_copies": 5,
+      "rack_number": "ROM-A03",
+      "cover_image": "book_covers/romance03.jpg",
+      "description": "A young widow discovers her late husband left messages to help her move forward.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 44,
+    "fields": {
+      "book_id": "LIB-0044",
+      "title": "The Time Traveler's Wife",
+      "author": "Audrey Niffenegger",
+      "isbn": "978-0156029438",
+      "category": 5,
+      "publisher": null,
+      "total_copies": 4,
+      "available_copies": 4,
+      "rack_number": "ROM-A04",
+      "cover_image": "book_covers/romance04.jpg",
+      "description": "A love story about a man with a genetic disorder that causes him to time travel.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 45,
+    "fields": {
+      "book_id": "LIB-0045",
+      "title": "Hacking: The Art of Exploitation",
+      "author": "Jon Erickson",
+      "isbn": "978-1593271442",
+      "category": 8,
+      "publisher": null,
+      "total_copies": 4,
+      "available_copies": 4,
+      "rack_number": "SEC-A01",
+      "cover_image": "book_covers/security01.jpg",
+      "description": "A deep dive into the art of hacking and exploitation techniques.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 46,
+    "fields": {
+      "book_id": "LIB-0046",
+      "title": "The Web Application Hacker's Handbook",
+      "author": "Dafydd Stuttard",
+      "isbn": "978-1118026472",
+      "category": 8,
+      "publisher": null,
+      "total_copies": 4,
+      "available_copies": 4,
+      "rack_number": "SEC-A02",
+      "cover_image": "book_covers/security02.jpg",
+      "description": "Finding and exploiting security flaws in web applications.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 47,
+    "fields": {
+      "book_id": "LIB-0047",
+      "title": "Cryptography and Network Security",
+      "author": "William Stallings",
+      "isbn": "978-0134444284",
+      "category": 8,
+      "publisher": null,
+      "total_copies": 5,
+      "available_copies": 5,
+      "rack_number": "SEC-A03",
+      "cover_image": "book_covers/security03.jpg",
+      "description": "Principles and practice of cryptography and network security.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 48,
+    "fields": {
+      "book_id": "LIB-0048",
+      "title": "Atomic Habits",
+      "author": "James Clear",
+      "isbn": "978-0735211292",
+      "category": 6,
+      "publisher": null,
+      "total_copies": 8,
+      "available_copies": 8,
+      "rack_number": "SELF-A01",
+      "cover_image": "book_covers/trend01.jpg",
+      "description": "An easy and proven way to build good habits and break bad ones.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 49,
+    "fields": {
+      "book_id": "LIB-0049",
+      "title": "The Midnight Library",
+      "author": "Matt Haig",
+      "isbn": "978-0525559474",
+      "category": 10,
+      "publisher": null,
+      "total_copies": 5,
+      "available_copies": 5,
+      "rack_number": "REC-A03",
+      "cover_image": "book_covers/trend02.jpg",
+      "description": "Between life and death there is a library with infinite possibilities.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 50,
+    "fields": {
+      "book_id": "LIB-0050",
+      "title": "Tiny Changes, Remarkable Results",
+      "author": "James Clear",
+      "isbn": "978-0735211308",
+      "category": 6,
+      "publisher": null,
+      "total_copies": 4,
+      "available_copies": 4,
+      "rack_number": "SELF-A02",
+      "cover_image": "book_covers/trend03.jpg",
+      "description": "Transform your life with tiny changes that lead to remarkable results.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 51,
+    "fields": {
+      "book_id": "LIB-0051",
+      "title": "It Ends with Us",
+      "author": "Colleen Hoover",
+      "isbn": "978-1501110368",
+      "category": 5,
+      "publisher": null,
+      "total_copies": 6,
+      "available_copies": 6,
+      "rack_number": "ROM-A05",
+      "cover_image": "book_covers/trend04.jpg",
+      "description": "A powerful story about love, strength and making difficult decisions.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 52,
+    "fields": {
+      "book_id": "LIB-0052",
+      "title": "Ting Diary V",
+      "author": "Various Authors",
+      "isbn": "978-0000000052",
+      "category": 6,
+      "publisher": null,
+      "total_copies": 3,
+      "available_copies": 3,
+      "rack_number": "SELF-A03",
+      "cover_image": "book_covers/trend05.jpg",
+      "description": "A collection of inspirational diary entries and reflections.",
+      "date_added": "2026-01-01"
+    }
+  },
+  {
+    "model": "books.book",
+    "pk": 53,
+    "fields": {
+      "book_id": "LIB-0053",
+      "title": "The Web Application Hacker's Handbook: Complete Edition",
+      "author": "Dafydd Stuttard",
+      "isbn": "978-1118026480",
+      "category": 8,
+      "publisher": null,
+      "total_copies": 4,
+      "available_copies": 4,
+      "rack_number": "SEC-A04",
+      "cover_image": "book_covers/web01.jpg",
+      "description": "Complete edition of finding and exploiting web application security flaws.",
+      "date_added": "2026-01-01"
+    }
+  }
+]

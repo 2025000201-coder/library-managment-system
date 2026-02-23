@@ -1,0 +1,173 @@
+{% extends 'base.html' %}
+{% block title %}{{ book.title }} — LibraryMS{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h4 class="fw-bold"><i class="bi bi-book me-2"></i>Book Details</h4>
+  <a href="{% url 'books:book_list' %}" class="btn btn-outline-secondary btn-sm">
+    <i class="bi bi-arrow-left"></i> Back to Books
+  </a>
+</div>
+
+<div class="card shadow-sm border-0">
+  <div class="card-body p-4">
+    <div class="row">
+
+      <!-- Book Cover -->
+      <div class="col-md-3 text-center mb-4">
+        {% if book.cover_image %}
+          <img src="{{ book.cover_image.url }}" class="img-fluid rounded shadow">
+        {% else %}
+          <div class="bg-primary bg-gradient text-white d-flex align-items-center
+                      justify-content-center rounded shadow"
+               style="height:280px; font-size:4rem;">
+            <i class="bi bi-book"></i>
+          </div>
+        {% endif %}
+
+        <!-- Availability Badge -->
+        <div class="mt-3">
+          {% if book.is_available %}
+            <span class="badge bg-success fs-6 px-3 py-2">
+              <i class="bi bi-check-circle"></i> Available
+            </span>
+          {% else %}
+            <span class="badge bg-danger fs-6 px-3 py-2">
+              <i class="bi bi-x-circle"></i> Not Available
+            </span>
+          {% endif %}
+        </div>
+
+        <!-- Action Buttons -->
+        {% if user.is_admin_user or user.is_librarian_user %}
+        <div class="mt-3 d-grid gap-2">
+          <a href="{% url 'books:book_edit' book.pk %}" class="btn btn-warning btn-sm">
+            <i class="bi bi-pencil"></i> Edit Book
+          </a>
+          <a href="{% url 'books:book_delete' book.pk %}" class="btn btn-outline-danger btn-sm">
+            <i class="bi bi-trash"></i> Delete Book
+          </a>
+        </div>
+        {% endif %}
+      </div>
+
+      <!-- Book Information -->
+      <div class="col-md-9">
+        <h3 class="fw-bold">{{ book.title }}</h3>
+        <p class="text-muted fs-5 mb-3">by <strong>{{ book.author }}</strong></p>
+
+        <hr>
+
+        <div class="row g-3">
+          <div class="col-md-6">
+            <table class="table table-borderless mb-0">
+              <tr>
+                <th class="text-muted" style="width:45%">Book ID</th>
+                <td><span class="badge bg-secondary">{{ book.book_id }}</span></td>
+              </tr>
+              <tr>
+                <th class="text-muted">ISBN</th>
+                <td>{{ book.isbn }}</td>
+              </tr>
+              <tr>
+                <th class="text-muted">Category</th>
+                <td>
+                  <span class="badge bg-primary">{{ book.category }}</span>
+                </td>
+              </tr>
+              <tr>
+                <th class="text-muted">Publisher</th>
+                <td>{{ book.publisher|default:"—" }}</td>
+              </tr>
+              <tr>
+                <th class="text-muted">Date Added</th>
+                <td>{{ book.date_added|date:"d M Y" }}</td>
+              </tr>
+            </table>
+          </div>
+
+          <div class="col-md-6">
+            <table class="table table-borderless mb-0">
+              <tr>
+                <th class="text-muted" style="width:50%">Total Copies</th>
+                <td><strong>{{ book.total_copies }}</strong></td>
+              </tr>
+              <tr>
+                <th class="text-muted">Available</th>
+                <td>
+                  <strong class="{% if book.is_available %}text-success{% else %}text-danger{% endif %}">
+                    {{ book.available_copies }}
+                  </strong>
+                </td>
+              </tr>
+              <tr>
+                <th class="text-muted">Issued</th>
+                <td>{{ book.total_copies|add:"-"|add:book.available_copies }}
+                  ({{ book.total_copies }} - {{ book.available_copies }})
+                </td>
+              </tr>
+              <tr>
+                <th class="text-muted">Rack Number</th>
+                <td>{{ book.rack_number|default:"—" }}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <!-- Description -->
+        {% if book.description %}
+        <div class="mt-3 p-3 bg-light rounded">
+          <h6 class="fw-bold mb-2"><i class="bi bi-info-circle me-1"></i>Description</h6>
+          <p class="text-muted mb-0">{{ book.description }}</p>
+        </div>
+        {% endif %}
+
+        <!-- Reviews & Ratings -->
+        <div class="mt-4 d-flex align-items-center gap-2 flex-wrap">
+          <a href="{% url 'reviews:book_reviews' book.pk %}" class="btn btn-outline-warning">
+            <i class="bi bi-star me-1"></i>See Reviews
+          </a>
+          {% if user.is_authenticated %}
+            <a href="{% url 'reviews:add_review' book.pk %}" class="btn btn-warning">
+              <i class="bi bi-pencil-square me-1"></i>Write a Review
+            </a>
+          {% endif %}
+        </div>
+
+
+        <!-- Issue Button -->
+       {% if user.is_admin_user or user.is_librarian_user %}
+          {% if book.is_available %}
+          <div class="mt-4">
+            <a href="{% url 'circulation:issue_book' %}?book={{ book.pk }}"
+               class="btn btn-success">
+              <i class="bi bi-arrow-right-circle"></i> Issue This Book
+            </a>
+          </div>
+          {% endif %}
+        {% endif %}
+
+        {% if not book.is_available and user.is_authenticated %}
+          <div class="mt-3">
+            <a href="{% url 'reservation:reserve_book' book.pk %}" class="btn btn-outline-primary">
+              <i class="bi bi-bookmark-plus me-1"></i>Reserve This Book
+            </a>
+          </div>
+        {% endif %}
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}   ← ADD THIS
+<style>
+  .col-md-3 img {
+    height: 320px !important;
+    width: 100% !important;
+    object-fit: cover !important;
+    object-position: top !important;
+  }
+</style>
+{% endblock %} 

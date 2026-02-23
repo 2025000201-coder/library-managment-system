@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% block title %}Activity Logs — LibraryMS{% endblock %}
+
+{% block extra_css %}
+<style>
+  .log-timeline { position: relative; padding-left: 2rem; }
+  .log-timeline::before {
+    content: '';
+    position: absolute;
+    left: 16px;
+    top: 0; bottom: 0;
+    width: 2px;
+    background: #e9ecef;
+  }
+  .log-item {
+    position: relative;
+    margin-bottom: 1rem;
+  }
+  .log-dot {
+    position: absolute;
+    left: -2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem;
+    z-index: 1;
+  }
+  .log-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 0.8rem 1.2rem;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+    border: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+  .log-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+  .filter-bar { background: #fff; border-radius: 12px; padding: 1rem 1.5rem; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div>
+    <h4 class="fw-bold mb-0"><i class="bi bi-activity me-2"></i>Activity Logs</h4>
+    <p class="text-muted small mb-0">{{ total_count }} total activities recorded</p>
+  </div>
+</div>
+
+<!-- Filter Bar -->
+<div class="filter-bar mb-4">
+  <form method="get" class="row g-3 align-items-end">
+    <div class="col-md-4">
+      <label class="form-label small fw-semibold">Search</label>
+      <div class="input-group">
+        <span class="input-group-text bg-white"><i class="bi bi-search text-muted"></i></span>
+        <input type="text" name="search" class="form-control border-start-0" placeholder="Username or action..." value="{{ search }}">
+      </div>
+    </div>
+    <div class="col-md-3">
+      <label class="form-label small fw-semibold">Action Type</label>
+      <select name="action" class="form-select">
+        <option value="">All Actions</option>
+        {% for value, label in action_choices %}
+        <option value="{{ value }}" {% if action_filter == value %}selected{% endif %}>{{ label }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-3">
+      <label class="form-label small fw-semibold">Date</label>
+      <input type="date" name="date" class="form-control" value="{{ date_filter }}">
+    </div>
+    <div class="col-md-2">
+      <button type="submit" class="btn btn-primary w-100">Filter</button>
+    </div>
+  </form>
+</div>
+
+<!-- Timeline -->
+{% if logs %}
+<div class="log-timeline">
+  {% for item in logs %}
+  <div class="log-item">
+    <div class="log-dot bg-{{ item.color }} bg-opacity-15 text-{{ item.color }}">
+      <i class="bi {{ item.icon }}"></i>
+    </div>
+    <div class="log-card">
+      <div class="flex-grow-1">
+        <div class="fw-semibold small">{{ item.log.description }}</div>
+        <div class="text-muted" style="font-size:0.78rem;">
+          <i class="bi bi-person me-1"></i>{{ item.log.user.get_full_name|default:item.log.user.username }}
+          {% if item.log.ip_address %}
+          <span class="ms-2"><i class="bi bi-globe me-1"></i>{{ item.log.ip_address }}</span>
+          {% endif %}
+        </div>
+      </div>
+      <div class="text-end text-nowrap">
+        <span class="badge bg-{{ item.color }} bg-opacity-15 text-{{ item.color }} px-2 py-1 rounded-pill small">
+          {{ item.log.get_action_display }}
+        </span>
+        <div class="text-muted mt-1" style="font-size:0.75rem;">
+          {{ item.log.timestamp|date:"d M Y, h:i A" }}
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="text-center py-5 text-muted">
+  <i class="bi bi-activity fs-1 d-block mb-3"></i>
+  <h5>No activity logs found</h5>
+  <p class="small">Activity will be recorded as you use the system.</p>
+</div>
+{% endif %}
+
+{% endblock %}

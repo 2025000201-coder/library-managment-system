@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+{% block title %}Reports — LibraryMS{% endblock %}
+
+{% block extra_css %}
+<style>
+  .report-card {
+    border-radius: 16px;
+    border: none;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .report-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+  }
+  .report-icon {
+    width: 56px; height: 56px;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+  }
+  .export-btn { border-radius: 8px; font-size: 0.85rem; padding: 6px 14px; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div>
+    <h4 class="fw-bold mb-0"><i class="bi bi-file-earmark-bar-graph me-2"></i>Reports</h4>
+    <p class="text-muted small mb-0">Export and download library reports</p>
+  </div>
+</div>
+
+<!-- Quick Stats -->
+<div class="row g-3 mb-5">
+  <div class="col-6 col-md-2">
+    <div class="card text-center p-3 border-0 bg-primary bg-opacity-10">
+      <div class="fw-bold fs-4 text-primary">{{ total_books }}</div>
+      <div class="small text-muted">Total Books</div>
+    </div>
+  </div>
+  <div class="col-6 col-md-2">
+    <div class="card text-center p-3 border-0 bg-success bg-opacity-10">
+      <div class="fw-bold fs-4 text-success">{{ total_students }}</div>
+      <div class="small text-muted">Students</div>
+    </div>
+  </div>
+  <div class="col-6 col-md-2">
+    <div class="card text-center p-3 border-0 bg-info bg-opacity-10">
+      <div class="fw-bold fs-4 text-info">{{ total_issued }}</div>
+      <div class="small text-muted">Issued</div>
+    </div>
+  </div>
+  <div class="col-6 col-md-2">
+    <div class="card text-center p-3 border-0 bg-warning bg-opacity-10">
+      <div class="fw-bold fs-4 text-warning">{{ total_overdue }}</div>
+      <div class="small text-muted">Overdue</div>
+    </div>
+  </div>
+  <div class="col-6 col-md-2">
+    <div class="card text-center p-3 border-0 bg-danger bg-opacity-10">
+      <div class="fw-bold fs-4 text-danger">{{ total_fines }}</div>
+      <div class="small text-muted">Unpaid Fines</div>
+    </div>
+  </div>
+</div>
+
+<!-- Report Cards -->
+<div class="row g-4">
+
+  <!-- Issued Books Report -->
+  <div class="col-md-4">
+    <div class="card report-card p-4">
+      <div class="report-icon bg-primary bg-opacity-10 text-primary">
+        <i class="bi bi-book-half"></i>
+      </div>
+      <h5 class="fw-bold mb-1">Issued Books</h5>
+      <p class="text-muted small mb-4">All issued books with student details, issue & due dates, and return status.</p>
+      <div class="d-flex gap-2">
+        <a href="{% url 'reports:export_issued_excel' %}" class="btn btn-success export-btn flex-fill">
+          <i class="bi bi-file-earmark-excel me-1"></i>Excel
+        </a>
+        <a href="{% url 'reports:export_issued_pdf' %}" class="btn btn-danger export-btn flex-fill">
+          <i class="bi bi-file-earmark-pdf me-1"></i>PDF
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fines Report -->
+  <div class="col-md-4">
+    <div class="card report-card p-4">
+      <div class="report-icon bg-danger bg-opacity-10 text-danger">
+        <i class="bi bi-cash-coin"></i>
+      </div>
+      <h5 class="fw-bold mb-1">Fines Report</h5>
+      <p class="text-muted small mb-4">Complete fine records with overdue days, amounts, and payment status.</p>
+      <div class="d-flex gap-2">
+        <a href="{% url 'reports:export_fines_excel' %}" class="btn btn-success export-btn flex-fill">
+          <i class="bi bi-file-earmark-excel me-1"></i>Excel
+        </a>
+        <a href="{% url 'reports:export_fines_pdf' %}" class="btn btn-danger export-btn flex-fill">
+          <i class="bi bi-file-earmark-pdf me-1"></i>PDF
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Books Catalog -->
+  <div class="col-md-4">
+    <div class="card report-card p-4">
+      <div class="report-icon bg-success bg-opacity-10 text-success">
+        <i class="bi bi-journals"></i>
+      </div>
+      <h5 class="fw-bold mb-1">Books Catalog</h5>
+      <p class="text-muted small mb-4">Full library catalog with book IDs, authors, categories, and availability.</p>
+      <div class="d-flex gap-2">
+        <a href="{% url 'reports:export_books_excel' %}" class="btn btn-success export-btn flex-fill">
+          <i class="bi bi-file-earmark-excel me-1"></i>Excel
+        </a>
+        <span class="btn btn-outline-secondary export-btn flex-fill disabled">
+          <i class="bi bi-file-earmark-pdf me-1"></i>PDF
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overdue Report -->
+  <div class="col-md-4">
+    <div class="card report-card p-4">
+      <div class="report-icon bg-warning bg-opacity-10 text-warning">
+        <i class="bi bi-exclamation-triangle"></i>
+      </div>
+      <h5 class="fw-bold mb-1">Overdue Report</h5>
+      <p class="text-muted small mb-4">List of all overdue books with student contacts and estimated fine amounts.</p>
+      <div class="d-flex gap-2">
+        <span class="btn btn-outline-secondary export-btn flex-fill disabled">
+          <i class="bi bi-file-earmark-excel me-1"></i>Excel
+        </span>
+        <a href="{% url 'reports:export_overdue_pdf' %}" class="btn btn-danger export-btn flex-fill">
+          <i class="bi bi-file-earmark-pdf me-1"></i>PDF
+        </a>
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

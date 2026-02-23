@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% block title %}Issue Details — LibraryMS{% endblock %}
+
+{% block extra_css %}
+<style>
+  .detail-card { border-radius: 16px; border: none; box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
+  .info-row { display: flex; justify-content: space-between; padding: 0.65rem 0; border-bottom: 1px dashed #e9ecef; }
+  .info-row:last-child { border-bottom: none; }
+  .status-badge-issued { background:#e3f2fd; color:#1565c0; }
+  .status-badge-overdue { background:#fce4ec; color:#b71c1c; }
+  .status-badge-returned { background:#e8f5e9; color:#2e7d32; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h4 class="fw-bold mb-0"><i class="bi bi-file-text me-2"></i>Issue Details</h4>
+  <a href="{% url 'circulation:issued_list' %}" class="btn btn-outline-secondary btn-sm">
+    <i class="bi bi-arrow-left me-1"></i>Back to List
+  </a>
+</div>
+
+<div class="row">
+  <div class="col-lg-7">
+    <div class="card detail-card p-4 mb-4">
+      <h6 class="fw-bold mb-3 text-muted" style="font-size:0.75rem; letter-spacing:0.08em; text-transform:uppercase;">Book</h6>
+      <div class="d-flex gap-3 mb-4">
+        {% if issued.book.cover_image %}
+        <img src="{{ issued.book.cover_image.url }}" class="rounded" style="width:60px; height:80px; object-fit:cover;">
+        {% else %}
+        <div class="rounded bg-primary bg-opacity-10 d-flex align-items-center justify-content-center" style="width:60px;height:80px;">
+          <i class="bi bi-book text-primary fs-4"></i>
+        </div>
+        {% endif %}
+        <div>
+          <div class="fw-bold">{{ issued.book.title }}</div>
+          <div class="text-muted small">{{ issued.book.author }}</div>
+          <div class="text-muted small">{{ issued.book.book_id }}</div>
+        </div>
+      </div>
+
+      <h6 class="fw-bold mb-3 text-muted" style="font-size:0.75rem; letter-spacing:0.08em; text-transform:uppercase;">Issue Information</h6>
+      <div class="info-row"><span class="text-muted">Student</span><strong>{{ issued.student.get_full_name }}</strong></div>
+      <div class="info-row"><span class="text-muted">Membership ID</span><span>{{ issued.student.membership_id|default:"—" }}</span></div>
+      <div class="info-row"><span class="text-muted">Issued By</span><span>{{ issued.issued_by.get_full_name|default:"—" }}</span></div>
+      <div class="info-row"><span class="text-muted">Issue Date</span><span>{{ issued.issue_date|date:"d M Y" }}</span></div>
+      <div class="info-row"><span class="text-muted">Due Date</span>
+        <span class="{% if issued.status == 'overdue' %}text-danger fw-bold{% endif %}">{{ issued.due_date|date:"d M Y" }}</span>
+      </div>
+      <div class="info-row"><span class="text-muted">Return Date</span><span>{{ issued.return_date|date:"d M Y"|default:"Not returned yet" }}</span></div>
+      <div class="info-row"><span class="text-muted">Status</span>
+        <span class="badge status-badge-{{ issued.status }} px-3 py-2 rounded-pill">{{ issued.get_status_display }}</span>
+      </div>
+      {% if issued.notes %}
+      <div class="info-row"><span class="text-muted">Notes</span><span>{{ issued.notes }}</span></div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="col-lg-5">
+    <!-- Fine Info -->
+    {% if fine %}
+    <div class="card detail-card p-4 mb-3">
+      <h6 class="fw-bold mb-3 text-muted" style="font-size:0.75rem; letter-spacing:0.08em; text-transform:uppercase;">Fine Details</h6>
+      <div class="info-row"><span class="text-muted">Overdue Days</span><strong>{{ fine.overdue_days }} days</strong></div>
+      <div class="info-row"><span class="text-muted">Fine/Day</span><span>₹{{ fine.fine_per_day }}</span></div>
+      <div class="info-row"><span class="text-muted">Total Fine</span><strong class="text-danger">₹{{ fine.amount }}</strong></div>
+      <div class="info-row"><span class="text-muted">Status</span>
+        {% if fine.status == 'paid' %}
+          <span class="badge bg-success">Paid</span>
+        {% elif fine.status == 'waived' %}
+          <span class="badge bg-secondary">Waived</span>
+        {% else %}
+          <span class="badge bg-danger">Unpaid</span>
+        {% endif %}
+      </div>
+      {% if fine.status == 'unpaid' %}
+  {% if user.is_admin_user or user.is_librarian_user %}
+      <div class="mt-3 d-flex gap-2">
+        <a href="{% url 'circulation:mark_fine_paid' fine.pk %}" class="btn btn-success btn-sm flex-fill">
+          <i class="bi bi-check-circle me-1"></i>Mark Paid
+        </a>
+        {% if user.is_admin_user %}
+        <a href="{% url 'circulation:waive_fine' fine.pk %}" class="btn btn-outline-secondary btn-sm flex-fill">
+          Waive Fine
+        </a>
+        {% endif %}
+      </div>
+      {% endif %}
+    </div>
+    {% endif %}
+{% endif %}
+
+    <!-- Actions -->
+   {% if issued.status != 'returned' %}
+  {% if user.is_admin_user or user.is_librarian_user %}
+    <div class="card detail-card p-4">
+      <h6 class="fw-bold mb-3">Actions</h6>
+      <a href="{% url 'circulation:return_book' issued.pk %}" class="btn btn-success w-100">
+        <i class="bi bi-arrow-return-left me-2"></i>Process Return
+      </a>
+    </div>
+    {% endif %}
+{% endif %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,316 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard — LibraryMS{% endblock %}
+
+{% block content %}
+
+<!-- Welcome Header -->
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div>
+    <h4 class="fw-bold mb-0"><i class="bi bi-speedometer2 me-2"></i>Dashboard</h4>
+    <small class="text-muted">Welcome back, {{ user.get_full_name|default:user.username }}! 👋</small>
+  </div>
+  <span class="text-muted small"><i class="bi bi-calendar3 me-1"></i>{{ today|date:"l, d F Y" }}</span>
+</div>
+
+<!-- ── Stat Cards ────────────────────────────── -->
+<div class="row g-3 mb-4">
+  <div class="col-md-2 col-sm-4 col-6">
+    <div class="stat-card" style="border-color:#4361ee;">
+      <div class="stat-icon" style="background:rgba(67,97,238,0.12);">
+        <i class="bi bi-book" style="color:#4361ee;"></i>
+      </div>
+      <div class="stat-num" style="color:#4361ee;">{{ total_books }}</div>
+      <div class="stat-label">Total Books</div>
+    </div>
+  </div>
+  <div class="col-md-2 col-sm-4 col-6">
+    <div class="stat-card" style="border-color:#06d6a0;">
+      <div class="stat-icon" style="background:rgba(6,214,160,0.12);">
+        <i class="bi bi-people" style="color:#06d6a0;"></i>
+      </div>
+      <div class="stat-num" style="color:#06d6a0;">{{ total_students }}</div>
+      <div class="stat-label">Students</div>
+    </div>
+  </div>
+  <div class="col-md-2 col-sm-4 col-6">
+    <div class="stat-card" style="border-color:#3a86ff;">
+      <div class="stat-icon" style="background:rgba(58,134,255,0.12);">
+        <i class="bi bi-arrow-left-right" style="color:#3a86ff;"></i>
+      </div>
+      <div class="stat-num" style="color:#3a86ff;">{{ total_issued }}</div>
+      <div class="stat-label">Issued Books</div>
+    </div>
+  </div>
+  <div class="col-md-2 col-sm-4 col-6">
+    <div class="stat-card" style="border-color:#fb5607;">
+      <div class="stat-icon" style="background:rgba(251,86,7,0.12);">
+        <i class="bi bi-exclamation-triangle" style="color:#fb5607;"></i>
+      </div>
+      <div class="stat-num" style="color:#fb5607;">{{ total_overdue }}</div>
+      <div class="stat-label">Overdue</div>
+    </div>
+  </div>
+  <div class="col-md-2 col-sm-4 col-6">
+    <div class="stat-card" style="border-color:#ffbe0b;">
+      <div class="stat-icon" style="background:rgba(255,190,11,0.12);">
+        <i class="bi bi-cash-coin" style="color:#ffbe0b;"></i>
+      </div>
+      <div class="stat-num" style="color:#ffbe0b;">{{ total_unpaid_fines }}</div>
+      <div class="stat-label">Unpaid Fines</div>
+    </div>
+  </div>
+  <div class="col-md-2 col-sm-4 col-6">
+    <div class="stat-card" style="border-color:#8338ec;">
+      <div class="stat-icon" style="background:rgba(131,56,236,0.12);">
+        <i class="bi bi-check-circle" style="color:#8338ec;"></i>
+      </div>
+      <div class="stat-num" style="color:#8338ec;">{{ total_available }}</div>
+      <div class="stat-label">Available</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Charts Row ─────────────────────────────── -->
+<div class="row g-3 mb-4">
+  <div class="col-md-5">
+    <div class="card border-0 shadow-sm h-100">
+      <div class="card-header bg-white fw-bold border-bottom-0 pt-3">
+        <i class="bi bi-pie-chart me-2 text-primary"></i>Books by Category
+      </div>
+      <div class="card-body d-flex align-items-center justify-content-center">
+        <canvas id="categoryChart" style="max-height:280px;"></canvas>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-7">
+    <div class="card border-0 shadow-sm h-100">
+      <div class="card-header bg-white fw-bold border-bottom-0 pt-3">
+        <i class="bi bi-bar-chart me-2 text-primary"></i>Books per Category
+      </div>
+      <div class="card-body">
+        <canvas id="barChart" style="max-height:280px;"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Recent Activity ─────────────────────────── -->
+<div class="row g-3 mb-4">
+  <div class="col-md-8">
+    <div class="card border-0 shadow-sm">
+      <div class="card-header bg-white fw-bold border-bottom-0 pt-3 d-flex justify-content-between align-items-center">
+        <span><i class="bi bi-clock-history me-2 text-primary"></i>Recent Issues</span>
+        <a href="{% url 'circulation:issued_list' %}" class="btn btn-sm btn-outline-primary">View All</a>
+      </div>
+      <div class="card-body p-0">
+        <table class="table table-hover mb-0">
+          <thead class="table-light">
+            <tr>
+              <th>Student</th>
+              <th>Book</th>
+              <th>Issue Date</th>
+              <th>Due Date</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for issue in recent_issues %}
+            <tr>
+              <td>{{ issue.student.get_full_name|default:issue.student.username }}</td>
+              <td>{{ issue.book.title|truncatechars:28 }}</td>
+              <td>{{ issue.issue_date|date:"d M Y" }}</td>
+              <td>{{ issue.due_date|date:"d M Y" }}</td>
+              <td>
+                {% if issue.status == 'returned' %}
+                  <span class="badge bg-success">Returned</span>
+                {% elif issue.due_date < today %}
+                  <span class="badge bg-danger">Overdue</span>
+                {% else %}
+                  <span class="badge bg-primary">Issued</span>
+                {% endif %}
+              </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="5" class="text-center text-muted py-4">No issues yet</td></tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card border-0 shadow-sm h-100">
+      <div class="card-header bg-white fw-bold border-bottom-0 pt-3">
+        <i class="bi bi-exclamation-triangle me-2 text-danger"></i>Overdue Books
+      </div>
+      <div class="card-body p-0">
+        {% for issue in overdue_list %}
+        <div class="d-flex align-items-start p-3 border-bottom">
+          <div class="rounded-circle p-2 me-3 flex-shrink-0"
+               style="background:rgba(251,86,7,0.12);">
+            <i class="bi bi-book" style="color:#fb5607;"></i>
+          </div>
+          <div>
+            <div class="fw-semibold small">{{ issue.book.title|truncatechars:22 }}</div>
+            <div class="text-muted" style="font-size:0.78rem;">
+              {{ issue.student.get_full_name|default:issue.student.username }}
+            </div>
+            <div class="text-danger" style="font-size:0.75rem;">
+              <i class="bi bi-calendar-x me-1"></i>Due: {{ issue.due_date|date:"d M Y" }}
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <div class="text-center py-4">
+          <i class="bi bi-check-circle text-success" style="font-size:2.5rem;"></i>
+          <p class="text-muted mt-2 small">No overdue books! 🎉</p>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Recently Added Books ────────────────────── -->
+<div class="card border-0 shadow-sm">
+  <div class="card-header bg-white fw-bold border-bottom-0 pt-3 d-flex justify-content-between align-items-center">
+    <span><i class="bi bi-bookmark-star me-2 text-primary"></i>Recently Added Books</span>
+    <a href="{% url 'books:book_list' %}" class="btn btn-sm btn-outline-primary">View All</a>
+  </div>
+  <div class="card-body">
+    <div class="row g-3">
+      {% for book in recent_books %}
+      <div class="col-md-2 col-sm-4 col-6">
+        <a href="{% url 'books:book_detail' book.pk %}" class="text-decoration-none">
+          <div class="recent-book-card">
+            <div class="recent-cover">
+              {% if book.cover_image %}
+                <img src="{{ book.cover_image.url }}" alt="{{ book.title }}">
+              {% else %}
+                <div class="no-cover"><i class="bi bi-book"></i></div>
+              {% endif %}
+            </div>
+            <div class="p-2">
+              <div class="fw-semibold text-dark" style="font-size:0.78rem; line-height:1.3;">
+                {{ book.title|truncatechars:28 }}
+              </div>
+              <div class="text-muted" style="font-size:0.72rem;">{{ book.author|truncatechars:18 }}</div>
+            </div>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+
+{% block extra_js %}
+<script>
+  // @ts-nocheck
+  const catLabels = {{ cat_labels|safe }};
+  const catCounts = {{ cat_counts|safe }};
+  const catColors = {{ cat_colors|safe }};
+
+  // Doughnut Chart
+  new Chart(document.getElementById('categoryChart'), {
+    type: 'doughnut',
+    data: {
+      labels: catLabels,
+      datasets: [{ data: catCounts, backgroundColor: catColors, borderWidth: 2, borderColor: '#fff' }]
+    },
+   options: {
+  responsive: true,
+  animation: {
+    animateScale: true,
+    animateRotate: true,
+    duration: 1000,
+  },
+  plugins: {
+    legend: { position: 'right', labels: { font: { size: 10 }, boxWidth: 12, padding: 10 } }
+  },
+  cutout: '65%'
+},
+  });
+
+  // Bar Chart
+  new Chart(document.getElementById('barChart'), {
+    type: 'bar',
+    data: {
+      labels: catLabels,
+      datasets: [{
+        label: 'Number of Books',
+        data: catCounts,
+        backgroundColor: catColors,
+        borderRadius: 6,
+        borderSkipped: false,
+      }]
+    },
+   options: {
+  responsive: true,
+  animation: {
+    duration: 1000,
+    easing: 'easeInOutQuart',
+  },
+  plugins: { legend: { display: false } },
+  scales: {
+    y: { beginAtZero: true, ticks: { stepSize: 1 }, grid: { color: '#f0f0f0' } },
+    x: { ticks: { font: { size: 9 } }, grid: { display: false } }
+  }
+},
+  });
+</script>
+{% endblock %}
+
+
+{% block extra_css %}
+<style>
+  .stat-card {
+    background: #fff;
+    border-radius: 12px;
+    border-left: 4px solid;
+    padding: 16px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .stat-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  }
+  .stat-icon {
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+  .stat-num  { font-size: 2rem; font-weight: 700; line-height: 1; }
+  .stat-label { font-size: 0.78rem; color: #6c757d; margin-top: 4px; }
+
+  .recent-book-card {
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+    transition: transform 0.2s ease;
+  }
+  .recent-book-card:hover { transform: translateY(-4px); }
+  .recent-cover {
+    width: 100%; height: 130px;
+    background: #f5f5f5; overflow: hidden;
+  }
+  .recent-cover img {
+    width: 100%; height: 100%;
+    object-fit: contain; padding: 4px; background: #fafafa;
+  }
+  .recent-cover .no-cover {
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, #4361ee, #3a86ff);
+    display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 2rem;
+  }
+</style>
+{% endblock %}

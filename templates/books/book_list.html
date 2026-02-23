@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+{% block title %}Books — LibraryMS{% endblock %}
+
+{% block content %}
+<!-- Header -->
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h4 class="fw-bold"><i class="bi bi-book me-2"></i>Books</h4>
+  {% if user.is_admin_user or user.is_librarian_user %}
+  <div class="d-flex gap-2">
+    <a href="{% url 'books:category_list' %}" class="btn btn-outline-secondary btn-sm">
+      <i class="bi bi-tags"></i> Categories
+    </a>
+    <a href="{% url 'books:book_add' %}" class="btn btn-primary btn-sm">
+      <i class="bi bi-plus-circle"></i> Add Book
+    </a>
+  </div>
+  {% endif %}
+</div>
+
+<!-- Search & Filter -->
+<div class="card mb-4">
+  <div class="card-body">
+    <form method="GET" class="row g-2 align-items-end">
+      <div class="col-md-5">
+        <label class="form-label small text-muted">Search</label>
+        <input type="text" name="q" value="{{ query }}" class="form-control"
+               placeholder="Search by title, author, ISBN, Book ID...">
+      </div>
+      <div class="col-md-3">
+        <label class="form-label small text-muted">Category</label>
+        <select name="category" class="form-select">
+          <option value="">All Categories</option>
+          {% for cat in categories %}
+            <option value="{{ cat.id }}" {% if selected_category == cat.id|stringformat:"s" %}selected{% endif %}>
+              {{ cat.name }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-2">
+        <label class="form-label small text-muted">Availability</label>
+        <select name="availability" class="form-select">
+          <option value="">All</option>
+          <option value="available" {% if selected_availability == 'available' %}selected{% endif %}>Available</option>
+          <option value="unavailable" {% if selected_availability == 'unavailable' %}selected{% endif %}>Not Available</option>
+        </select>
+      </div>
+      <div class="col-md-2 d-flex gap-2">
+        <button type="submit" class="btn btn-primary w-100">
+          <i class="bi bi-search"></i> Search
+        </button>
+        <a href="{% url 'books:book_list' %}" class="btn btn-outline-secondary">
+          <i class="bi bi-x"></i>
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Results count -->
+<p class="text-muted small mb-3">
+  Showing <strong>{{ books|length }}</strong> book(s)
+  {% if query %}for "<strong>{{ query }}</strong>"{% endif %}
+</p>
+
+<!-- Book Cards Grid -->
+{% if books %}
+<div class="row g-4">
+  {% for book in books %}
+  <div class="col-md-3 col-sm-6">
+    <div class="card h-100 shadow-sm border-0 book-card">
+
+      <!-- Book Cover -->
+      <a href="{% url 'books:book_detail' book.pk %}">
+        {% if book.cover_image %}
+          <img src="{{ book.cover_image.url }}" class="card-img-top">
+        {% else %}
+          <div class="bg-primary bg-gradient d-flex align-items-center justify-content-center"
+               style="height:260px;">
+            <i class="bi bi-book text-white" style="font-size:3rem;"></i>
+          </div>
+        {% endif %}
+      </a>
+
+      <div class="card-body d-flex flex-column">
+        <!-- Title & Author -->
+        <h6 class="fw-bold mb-1">
+          <a href="{% url 'books:book_detail' book.pk %}" class="text-dark text-decoration-none">
+            {{ book.title|truncatechars:40 }}
+          </a>
+        </h6>
+        <p class="text-muted small mb-2">{{ book.author }}</p>
+
+        <!-- Category Badge -->
+        <span class="badge bg-light text-primary border border-primary mb-2" style="width:fit-content;">
+          {{ book.category }}
+        </span>
+
+        <!-- Availability -->
+        <div class="mt-auto d-flex justify-content-between align-items-center">
+          <small class="text-muted">ID: {{ book.book_id }}</small>
+          {% if book.is_available %}
+            <span class="badge bg-success">
+              <i class="bi bi-check-circle"></i> {{ book.available_copies }} left
+            </span>
+          {% else %}
+            <span class="badge bg-danger">
+              <i class="bi bi-x-circle"></i> Unavailable
+            </span>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      {% if user.is_admin_user or user.is_librarian_user %}
+      <div class="card-footer bg-white border-0 d-flex gap-2">
+        <a href="{% url 'books:book_edit' book.pk %}"
+           class="btn btn-outline-warning btn-sm flex-fill">
+          <i class="bi bi-pencil"></i> Edit
+        </a>
+        <a href="{% url 'books:book_delete' book.pk %}"
+           class="btn btn-outline-danger btn-sm flex-fill">
+          <i class="bi bi-trash"></i> Delete
+        </a>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% else %}
+<!-- Empty State -->
+<div class="text-center py-5">
+  <i class="bi bi-book text-muted" style="font-size:4rem;"></i>
+  <h5 class="mt-3 text-muted">No books found</h5>
+  {% if user.is_admin_user or user.is_librarian_user %}
+  <a href="{% url 'books:book_add' %}" class="btn btn-primary mt-2">
+    <i class="bi bi-plus-circle"></i> Add First Book
+  </a>
+  {% endif %}
+</div>
+{% endif %}
+
+{% endblock %}
+
+{% block extra_css %}
+<style>
+  .book-card img {
+    height: 260px !important;
+    object-fit: cover;
+    object-position: top;
+    width: 100%;
+  }
+
+  .book-card:hover {
+    transform: translateY(-5px);
+    transition: all 0.2s ease;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important;
+  }
+</style>
+{% endblock %}
