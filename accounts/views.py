@@ -75,7 +75,7 @@ def register_view(request):
 
 # ─────────────────────────────────────────
 # PROFILE
-# ─────────────────────────────────────────
+# ─────────────────────────────────────────` hcvbv `
 @login_required
 def profile_view(request):
     return render(request, 'accounts/profile.html', {'user': request.user})
